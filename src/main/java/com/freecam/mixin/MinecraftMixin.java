@@ -13,10 +13,6 @@ public abstract class MinecraftMixin {
     private void freecam$tick(CallbackInfo ci) {
         Minecraft mc = (Minecraft) (Object) this;
 
-        if (Freecam.active && (mc.player == null || mc.level == null || !mc.player.isAlive())) {
-            Freecam.active = false;
-        }
-
         boolean pressed = false;
         while (mc.options.keyTogglePerspective.consumeClick()) {
             pressed = true;
@@ -24,5 +20,7 @@ public abstract class MinecraftMixin {
         if (pressed && mc.screen == null && mc.player != null && mc.level != null) {
             Freecam.toggle(mc);
         }
+
+        Freecam.tick(mc);
     }
 }
