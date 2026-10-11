@@ -12,8 +12,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(KeyboardInput.class)
 public abstract class KeyboardInputMixin extends ClientInput {
-    // Zero out player movement while freecam is active
-    @Inject(method = "tick", at = @At("TAIL"))
+    @Inject(method = "tick", at = @At("TAIL"), require = 0)
     private void freecam$tick(CallbackInfo ci) {
         if (Freecam.active) {
             this.keyPresses = Input.EMPTY;
