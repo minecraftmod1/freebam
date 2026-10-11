@@ -10,8 +10,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(Entity.class)
 public abstract class EntityMixin {
-    // Mouse look: steer the camera instead of the player
-    @Inject(method = "turn", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "turn", at = @At("HEAD"), cancellable = true, require = 0)
     private void freecam$turn(double yRot, double xRot, CallbackInfo ci) {
         if (Freecam.active && (Object) this == Minecraft.getInstance().player) {
             Freecam.look(yRot, xRot);
