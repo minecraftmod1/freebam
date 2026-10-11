@@ -9,16 +9,14 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(Minecraft.class)
 public abstract class MinecraftMixin {
-    @Inject(method = "tick", at = @At("HEAD"))
+    @Inject(method = "tick", at = @At("HEAD"), require = 0)
     private void freecam$tick(CallbackInfo ci) {
         Minecraft mc = (Minecraft) (Object) this;
 
-        // Safety: turn off if no player/world
         if (Freecam.active && (mc.player == null || mc.level == null || !mc.player.isAlive())) {
             Freecam.active = false;
         }
 
-        // Consume F5 presses before vanilla sees them
         boolean pressed = false;
         while (mc.options.keyTogglePerspective.consumeClick()) {
             pressed = true;
